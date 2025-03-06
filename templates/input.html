@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Item Details</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        form { display: inline-block; text-align: left; }
+        input { display: block; margin: 10px auto; padding: 5px; width: 80%; }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Enter Item Details</h1>
+    <form id="item-form">
+        <label for="item_name">Item Name:</label>
+        <input type="text" id="item_name" name="item_name" required>
+        <label for="expiry_date">Expiry Date:</label>
+        <input type="text" id="expiry_date" name="expiry_date">
+        <input type="hidden" id="barcode" name="barcode" value="{{ barcode }}">
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        document.getElementById('item-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const formDataObj = {};
+            formData.forEach((value, key) => (formDataObj[key] = value));
+
+            try {
+                const response = await fetch("/update_item", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formDataObj)
+                });
+
+                const result = await response.json();
+                alert(result.message); //  message
+
+                // Redirect 
+                window.location.href = "/scanner";
+            } catch (error) {
+                console.error("Error updating item:", error);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Information</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        table { width: 60%; margin: auto; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>This is the  system S</h1>
+    <h3>Item Information</h3>
+    <table>
+        <tr>
+            <th>Barcode</th>
+            <td>{{ item.barcode }}</td>
+        </tr>
+        <tr>
+            <th>Item Name</th>
+            <td>{{ item.item_name }}</td>
+        </tr>
+        <tr>
+            <th>Expiry Date</th>
+            <td>{{ item.expiry_date }}</td>
+        </tr>
+        <tr>
+            <th>Scanned Time</th>
+            <td>{{ item.timestamp }}</td>
+        </tr>
+    </table>
+    <button onclick="location.href='/scanner'">Back to Scanner</button>
+</body>
+</html>

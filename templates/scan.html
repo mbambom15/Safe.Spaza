@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        img { width: 20%; max-width: 640px; border: 2px solid black; margin-bottom: 10px; }
+        
+    </style>
+</head>
+<body>
+    <h1>Live Barcode Scanner</h1>
+    <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Live Video Feed">
+    <script>
+        const checkBarcode = async () => {
+            const response = await fetch("/check_barcode");
+            const data = await response.json();
+            if (data.barcode) {
+                window.location.href = `/input/${data.barcode}`;
+            }
+        };
+
+        // Poll for barcode check every second
+        setInterval(checkBarcode, 1000);
+    </script>
+</body>
+</html>
