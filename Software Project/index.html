@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaza Shop Login Page/title>
+      <link rel ="stylesheet" href = "Spaza.css">
+</head>
+<body>
+    <h1>Welcome to Login Page</h1>
+    <div class = "Login Container">
+    <h2>Login</h2>
+      <form id = "Login Form">
+        <input type="text" name="username" placeholder="username" required>
+        <input type="password" id="password" placeholder="password">
+
+        <div class="radio group">
+          <label><input type="radio" name="userType" value="customer">Customer</label>
+          <label><input type="radio" name="userType" value="manufacturer">Manufacturer</label>
+          <label><input type="radio" name="userType" value="spaza">Spaza Owner</label>
+        </div>
+
+        <button type="submit">zLogin</button>
+      </form>
+
+      <button id="CustomerRedirect">Click here for customer</button>
+
+    </div>
+
+    <script src= script.js></script>
+</body>
+</html>
