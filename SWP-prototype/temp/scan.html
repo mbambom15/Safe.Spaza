@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode Scanner</title>
+  <script>
+    function checkScan() {
+      fetch('/scan_barcode')
+        .then(response => response.json())
+        .then(data => {
+          // Check if the returned JSON contains a valid product entry
+          if (data.prod_barcode) {
+            // Get the tbody element of the product table
+            let tbody = document.getElementById("productTableBody");
+            // Clear any existing rows
+            tbody.innerHTML = "";
+            // Create a new row with the retrieved data
+            let row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${data.prod_barcode}</td>
+              <td>${data.prod_name}</td>
+              <td>${data.prod_price}</td>
+              <td>${data.prod_expiry_date}</td>
+              <td>${data.prod_manu_date}</td>
+            `;
+            tbody.appendChild(row);
+            // Optionally, you can stop polling or redirect after showing the data:
+            // clearInterval(pollingInterval);  // if you want to stop polling
+            // window.location.href = "/dashboard";  // if you want to redirect after displaying the info
+          } else {
+            console.log(data.message || "Waiting for barcode...");
+          }
+        })
+        .catch(err => console.error("Error fetching barcode info:", err));
+    }
+    // Poll every 2 seconds for barcode scan results.
+    setInterval(checkScan, 2000);
+  </script>
+</head>
+<body>
+  <h1>Scanning...</h1>
+  <img src="{{ url_for('video_feed') }}" width="640" height="480">
+
+  <!-- Table to display product information -->
+  <table border="1" id="productTable" style="margin-top:20px; width:80%; text-align:left;">
+    <thead>
+      <tr>
+        <th>Barcode</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Expiry Date</th>
+        <th>Manufacture Date</th>
+      </tr>
+    </thead>
+    <tbody id="productTableBody">
+      <!-- Retrieved data will be inserted here -->
+    </tbody>
+  </table>
+</body>
+</html>
